@@ -59,7 +59,44 @@
       <span>COMMUNITY</span>
     </div>
   </div>
+  <!-- Check Your Report Section -->
+<div class="report-section" style="margin:40px auto;text-align:center;">
+  <button id="checkReportBtn" style="padding:18px 40px;font-size:20px;font-weight:700;border:none;border-radius:12px;cursor:pointer;background:linear-gradient(45deg,#00aaff,#0077cc);color:#fff;transition:0.3s;">
+    Check Your Report
+  </button>
 
+  <!-- Hidden buttons -->
+  <div id="reportOptions" style="margin-top:20px; display:none; gap:20px; flex-wrap:wrap; justify-content:center;">
+    <button class="reportBtn" data-url="https://shuvo-46.github.io/SK-100-FD-USER-REPORT" style="padding:14px 28px;font-size:16px;font-weight:600;border:none;border-radius:10px;cursor:pointer;background:#00ff88;color:#000;transition:0.3s;margin:6px;">
+      00 Friends ID
+    </button>
+    <button class="reportBtn" data-url="https://shuvo-46.github.io/SK-30FD-USER-REPORT" style="padding:14px 28px;font-size:16px;font-weight:600;border:none;border-radius:10px;cursor:pointer;background:#ffaa00;color:#000;transition:0.3s;margin:6px;">
+      30+ Friends ID
+    </button>
+  </div>
+</div>
+
+<script>
+  // Show hidden buttons when "Check Your Report" clicked
+  const checkBtn = document.getElementById('checkReportBtn');
+  const reportOptions = document.getElementById('reportOptions');
+  checkBtn.addEventListener('click', () => {
+    if(reportOptions.style.display === 'none') {
+      reportOptions.style.display = 'flex';
+    } else {
+      reportOptions.style.display = 'none';
+    }
+  });
+
+  // Redirect when any report button clicked
+  const reportBtns = document.querySelectorAll('.reportBtn');
+  reportBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const url = btn.getAttribute('data-url');
+      window.location.href = url; // redirect
+    });
+  });
+</script>
   <div class="slot">
     <p class="site-description" id="site-description-text">Loading description...</p>
   </div>
