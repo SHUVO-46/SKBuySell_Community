@@ -56,7 +56,7 @@
   <div class="header-bar">
     <div class="site-name">
       <span class="b">S</span><span class="d">K</span>
-      <span> COMMUNITY</span>
+      <span>COMMUNITY</span>
     </div>
   </div>
 
@@ -64,16 +64,14 @@
     <p class="site-description" id="site-description-text">Loading description...</p>
   </div>
 
-  <!-- Product Slots Container -->
   <div id="product-slots-container">
-      <div class="slot">Loading Products...</div>
+      <div class="slot"><div class="loader-mini" style="margin: auto;"></div> Loading Products...</div>
   </div>
 
-  <!-- Sellers Dashboard -->
   <div class="slot">
-    <h2 style="font-size: 22px; margin-bottom: 15px;"> Sellers Overview</h2>
+    <h2 style="font-size: 22px; margin-bottom: 15px;">Sellers Overview</h2>
     <div class="seller-list" id="seller-list-container">
-       Loading Sellers...
+       <div class="loader-mini" style="margin: auto;"></div> Loading Sellers...
     </div>
   </div>
 
@@ -85,7 +83,8 @@
   </div>
 
   <script>
-    const webAppUrl = 'https://script.google.com/macros/s/AKfycbz6gmJgRMPfWpZ4HkpKXkW212CfnI1Na_ib_3_45jWXHxJ1w5F4_2vfyGx_LD277ayO9g/exec';
+    // ржЖржкржирж╛рж░ ржирждрзБржи ржПржмржВ ржЪрзВрзЬрж╛ржирзНржд Web App URL ржЯрж┐ ржПржЦрж╛ржирзЗ ржпрзЛржЧ ржХрж░рж╛ рж╣рзЯрзЗржЫрзЗред
+    const webAppUrl = 'https://script.google.com/macros/s/AKfycbzP08SpI2bgfnq2cxTuvEl2teEe-kaY-u-ig1HbLScSpM1zssbcC__NMOsaHcSfOc60/exec'; 
 
     let allProducts = [];
 
@@ -94,17 +93,98 @@
     async function loadWebsiteData() {
         try {
             const response = await fetch(webAppUrl);
+            if (!response.ok) {
+                throw new Error(`Network response was not ok: ${response.statusText}`);
+            }
+            if (!response.headers.get("content-type")?.includes("application/json")) {
+                 throw new Error("Received non-JSON response. Check Apps Script permissions and ensure it's deployed for 'Anyone'.");
+            }
             const data = await response.json();
+            if (data.error) {
+                throw new Error(`Apps Script Error: ${data.error}`);
+            }
             allProducts = data.products;
             displaySettings(data.settings);
             displayProducts(data.products);
             displaySellers(data.sellers, data.products);
         } catch (error) {
             console.error('Data Loading Error:', error);
+            const errorMessage = `<div class="slot error-message">${error.message}</div>`;
+            document.getElementById('site-description-text').textContent = "Failed to load description.";
+            document.getElementById('product-slots-container').innerHTML = errorMessage;
+            document.getElementById('seller-list-container').innerHTML = `<div class="error-message">Failed to load sellers.</div>`;
         }
     }
-
+    
     function displaySettings(settings) {
+        const descElement = document.getElementById('site-description-text');
+        if (settings && settings.SiteDescription) { descElement.textContent = settings.SiteDescription; } 
+        else { descElement.textContent = "Welcome to our marketplace!"; }
+    }
+
+    function displayProducts(products) {
+        const container = document.getElementById('product-slots-container');
+        if (!products || products.length === 0) { container.innerHTML = '<div class="slot">No products found in your Google Sheet.</div>'; return; }
+        container.innerHTML = products.map(p => {
+            const paymentButtons = p.methods.map(method => `<button class="pay-method" onclick="showPaymentInput(this, '${method.toLowerCase()}')">${method}</button>`).join('');
+            return `<div class="slot" data-product-name="${p.name}"><div class="slot-header"><img src="${p.logo}" alt="${p.name} logo"><div class="slot-info"><div>${p.name}</div><div class="slot-price">${p.price}</div></div><button class="sell-now" onclick="toggleExpand(this)">Sell Now</button></div><div class="expand-area"><input type="text" class="seller-name-input" placeholder="Enter your name"><input type="text" class="sheet-link-input" placeholder="Paste your Google Sheet link here"><div style="margin:10px 0 6px;font-weight:600">Add payment method</div><div style="display:flex;gap:10px;margin-bottom:10px">${paymentButtons}</div><input type="text" class="payment-input" style="display:none" placeholder=""><button class="submit-btn" onclick="submitSale(this)">Submit</button><div class="waiting-area"><span class="loader"></span>Submitting...</div><div class="submit-message" style="margin-top: 15px; font-weight: 600;"></div></div></div>`;
+        }).join("");
+    }
+
+    function displaySellers(sellers, products) {
+        const container = document.getElementById('seller-list-container');
+        if (!sellers || sellers.length === 0) { container.innerHTML = '<div style="padding: 10px;">No sellers yet.</div>'; return; }
+        sellers.sort((a, b) => (a.status.toLowerCase() === 'waiting' && b.status.toLowerCase() !== 'waiting' ? -1 : 1));
+        container.innerHTML = sellers.map(seller => {
+            const product = products.find(p => p.name === seller.product);
+            const logo = product ? product.logo : 'https://i.imgur.com/sF4J6Uj.png';
+            const statusHtml = seller.status.toLowerCase() === 'received' ? `<div class="status-box">Received <div class="status-glow"></div></div>` : `<div class="status-box"><span class="loader-mini"></span> Waiting...</div>`;
+            return `<div class="seller-row"><div class="seller-info"><img src="${logo}" alt="${seller.product} logo"><span>${seller.name.toUpperCase()}</span></div>${statusHtml}</div>`;
+        }).join('');
+    }
+
+    function toggleExpand(btn) { const ex = btn.closest('.slot').querySelector('.expand-area'); ex.style.display = ex.style.display === 'block' ? 'none' : 'block'; }
+    
+    function showPaymentInput(btn, method) {
+        const expandArea = btn.closest('.expand-area');
+        const input = expandArea.querySelector('.payment-input');
+        input.style.display = 'block';
+        input.placeholder = `Enter your ${method} account number`;
+        expandArea.dataset.paymentMethod = method;
+    }
+
+    function submitSale(btn) {
+        const slot = btn.closest('.slot');
+        const expandArea = btn.closest('.expand-area');
+        const sellerName = expandArea.querySelector('.seller-name-input').value.trim();
+        const sheetLink = expandArea.querySelector('.sheet-link-input').value.trim();
+        const paymentNumber = expandArea.querySelector('.payment-input').value.trim();
+        const paymentMethod = expandArea.dataset.paymentMethod;
+        const productName = slot.dataset.productName;
+        const messageDiv = expandArea.querySelector('.submit-message');
+        if (!sellerName || !sheetLink || !paymentNumber || !paymentMethod) { messageDiv.textContent = 'Please fill all fields.'; messageDiv.style.color = 'red'; return; }
+        const waitingDiv = expandArea.querySelector('.waiting-area');
+        waitingDiv.style.display = 'flex';
+        btn.style.display = 'none';
+        messageDiv.textContent = '';
+        const submissionData = { sellerName, productName, paymentMethod, paymentNumber, sheetLink };
+        fetch(webAppUrl, { method: 'POST', body: JSON.stringify(submissionData), mode: 'no-cors' })
+            .then(() => {
+                messageDiv.textContent = 'Submission successful! Please refresh the page to see your name in the list.';
+                messageDiv.style.color = '#00ff00';
+                waitingDiv.style.display = 'none';
+            })
+            .catch(error => {
+                console.error('Submission Error:', error);
+                messageDiv.textContent = 'Submission failed. Please try again.';
+                messageDiv.style.color = 'red';
+                waitingDiv.style.display = 'none';
+                btn.style.display = 'block';
+            });
+    }
+  </script>
+</body>
+</html>
         const descElement = document.getElementById('site-description-text');
         descElement.textContent = settings?.SiteDescription || "Welcome to our marketplace!";
     }
