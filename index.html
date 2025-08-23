@@ -59,6 +59,8 @@
       <span>COMMUNITY</span>
     </div>
   </div>
+
+
   <!-- Check Your Report Section -->
 <div class="report-section" style="margin:40px auto;text-align:center;">
   <button id="checkReportBtn" style="padding:18px 40px;font-size:20px;font-weight:700;border:none;border-radius:12px;cursor:pointer;background:linear-gradient(45deg,#00aaff,#0077cc);color:#fff;transition:0.3s;">
@@ -73,6 +75,9 @@
     <button class="reportBtn" data-url="https://shuvo-46.github.io/SITE-UPDATE/" style="padding:14px 28px;font-size:16px;font-weight:600;border:none;border-radius:10px;cursor:pointer;background:#ffaa00;color:#000;transition:0.3s;margin:6px;">
       30+ Friends ID
     </button>
+    <button id="backHomeBtn" style="padding:14px 28px;font-size:16px;font-weight:600;border:none;border-radius:10px;cursor:pointer;background:#888;color:#fff;transition:0.3s;margin:6px;">
+      Back to Homepage
+    </button>
   </div>
 </div>
 
@@ -84,7 +89,15 @@
 
   <textarea id="uid-input" placeholder="Paste UID & PASS here... (UID[TAB]PASS)"
     style="width:100%;height:150px;margin:15px 0;padding:10px;border-radius:8px;border:1px solid #555;background:#222;color:#fff;"></textarea>
-  <button onclick="processUID()" style="padding:12px 25px;font-weight:600;background:#00aaff;color:#fff;border:none;border-radius:8px;cursor:pointer;">Check Report</button>
+
+  <div style="display:flex; justify-content:space-between; gap:10px; margin-top:10px;">
+    <button onclick="processUID()" style="padding:12px 25px;font-weight:600;background:#00aaff;color:#fff;border:none;border-radius:8px;cursor:pointer;">
+      Check Report
+    </button>
+    <button id="backHomeFromReport" style="padding:12px 25px;font-weight:600;background:#888;color:#fff;border:none;border-radius:8px;cursor:pointer;">
+      Back to Homepage
+    </button>
+  </div>
 
   <div id="report" style="margin-top:20px;display:none;">
     <h3>Your Report</h3>
@@ -116,8 +129,23 @@
 <script>
   const checkBtn = document.getElementById('checkReportBtn');
   const reportOptions = document.getElementById('reportOptions');
+  const backHomeBtn = document.getElementById('backHomeBtn');
+  const backHomeFromReport = document.getElementById('backHomeFromReport');
+
+  // Toggle report options
   checkBtn.addEventListener('click', () => {
     reportOptions.style.display = reportOptions.style.display === 'none' ? 'flex' : 'none';
+    document.getElementById('uidReportSection').style.display = 'none';
+  });
+
+  // Back to homepage buttons
+  backHomeBtn.addEventListener('click', () => {
+    reportOptions.style.display = 'none';
+    document.getElementById('uidReportSection').style.display = 'none';
+  });
+  backHomeFromReport.addEventListener('click', () => {
+    document.getElementById('uidReportSection').style.display = 'none';
+    reportOptions.style.display = 'flex';
   });
 
   // 00 Friends button → show inline report
@@ -134,7 +162,7 @@
     });
   });
 
-  // Process UID function (তোর আগের মতোই থাকবে)
+  // --- UID Processing & Amount Calculation ---
   function processUID() {
     const input = document.getElementById("uid-input").value.trim();
     if (!input) return;
@@ -149,15 +177,10 @@
     const duplicates = new Set();
     const ok = [];
     const back = [];
-    const okUIDs = ["61579360899271",
-                    "000",
-                    "61579346559719"]; // এখানে তোর লিস্ট যাবে
+    const okUIDs = ["61579360899271","000","61579346559719"]; // এখানে তোর লিস্ট যাবে
 
     uidPassPairs.forEach(entry => {
-      if (seenUIDs.has(entry.uid)) {
-        duplicates.add(entry.uid);
-        return;
-      }
+      if (seenUIDs.has(entry.uid)) { duplicates.add(entry.uid); return; }
       seenUIDs.add(entry.uid);
       if (okUIDs.includes(entry.uid)) ok.push(entry);
       else back.push(entry);
@@ -175,11 +198,9 @@
 
     const tbody = document.querySelector("#result-table tbody");
     tbody.innerHTML = "";
-
     ok.forEach(entry => {
       tbody.innerHTML += `<tr><td>${entry.uid}</td><td>${entry.pass}</td><td style="color:#0f0;">OK</td></tr>`;
     });
-
     back.forEach(entry => {
       tbody.innerHTML += `<tr><td>${entry.uid}</td><td>${entry.pass}</td><td style="color:#f00;">BACK</td></tr>`;
     });
@@ -188,18 +209,12 @@
   function copyUIDs(type) {
     const rows = document.querySelectorAll("#result-table tbody tr");
     let data = [];
-
     rows.forEach(row => {
       const uid = row.children[0].innerText;
       const pass = row.children[1].innerText;
       const status = row.children[2].innerText;
-
-      if ((type === 'ok' && status === 'OK') ||
-          (type === 'back' && status === 'BACK')) {
-        data.push(`${uid}\t${pass}`);
-      }
+      if ((type === 'ok' && status === 'OK') || (type === 'back' && status === 'BACK')) data.push(`${uid}\t${pass}`);
     });
-
     navigator.clipboard.writeText(data.join("\n"));
     alert(`${type.toUpperCase()} UID copied to clipboard`);
   }
@@ -207,17 +222,12 @@
   function downloadExcel(type) {
     const rows = document.querySelectorAll("#result-table tbody tr");
     let lines = [["UID", "Password", "Status"]];
-
     rows.forEach(row => {
       const uid = row.children[0].innerText;
       const pass = row.children[1].innerText;
       const status = row.children[2].innerText;
-
-      if ((type === 'ok' && status === 'OK') || (type === 'back' && status === 'BACK')) {
-        lines.push([uid, pass, status]);
-      }
+      if ((type === 'ok' && status === 'OK') || (type === 'back' && status === 'BACK')) lines.push([uid, pass, status]);
     });
-
     let csvContent = lines.map(e => e.join("\t")).join("\n");
     let blob = new Blob([csvContent], { type: "application/vnd.ms-excel" });
     let a = document.createElement("a");
@@ -226,6 +236,8 @@
     a.click();
   }
 </script>
+
+
 </script>
   <div class="slot">
     <p class="site-description" id="site-description-text">Loading description...</p>
