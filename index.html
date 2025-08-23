@@ -161,7 +161,7 @@
             document.getElementById('seller-list-container').innerHTML = `<div class="error-message">Failed to load sellers.</div>`;
         }
     }
-    setInterval(loadWebsiteData, 30000);
+    setInterval(loadWebsiteData, 60000);
     function displaySettings(settings) {
         const descElement = document.getElementById('site-description-text');
         if (settings && settings.SiteDescription) { descElement.textContent = settings.SiteDescription; } 
