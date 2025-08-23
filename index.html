@@ -76,7 +76,7 @@
 
   <!-- Hidden buttons -->
   <div id="reportOptions" style="margin-top:20px; display:none; gap:20px; flex-wrap:wrap; justify-content:center;">
-    <button class="reportBtn" data-url="https://shuvo-46.github.io/SK-100-FD-USER-REPORT" style="padding:14px 28px;font-size:16px;font-weight:600;border:none;border-radius:10px;cursor:pointer;background:#00ff88;color:#000;transition:0.3s;margin:6px;">
+    <button id="show00Report" style="padding:14px 28px;font-size:16px;font-weight:600;border:none;border-radius:10px;cursor:pointer;background:#00ff88;color:#000;transition:0.3s;margin:6px;">
       00 Friends ID
     </button>
     <button class="reportBtn" data-url="https://shuvo-46.github.io/SITE-UPDATE/" style="padding:14px 28px;font-size:16px;font-weight:600;border:none;border-radius:10px;cursor:pointer;background:#ffaa00;color:#000;transition:0.3s;margin:6px;">
@@ -85,26 +85,154 @@
   </div>
 </div>
 
+<!-- Hidden UID Report Section -->
+<div id="uidReportSection" style="display:none; max-width:900px; margin:40px auto; padding:20px; border:1px solid #ddd; border-radius:10px; background:#111; color:#fff;">
+  <h2 style="text-align:center;">00 Friends Two Factor Report</h2>
+  <p>Member Rate: <span id="member-rate">8.00</span> TK</p>
+  <p>200+ Rate: <span id="admin-rate">8.30</span> TK</p>
+
+  <textarea id="uid-input" placeholder="Paste UID & PASS here... (UID[TAB]PASS)"
+    style="width:100%;height:150px;margin:15px 0;padding:10px;border-radius:8px;border:1px solid #555;background:#222;color:#fff;"></textarea>
+  <button onclick="processUID()" style="padding:12px 25px;font-weight:600;background:#00aaff;color:#fff;border:none;border-radius:8px;cursor:pointer;">Check Report</button>
+
+  <div id="report" style="margin-top:20px;display:none;">
+    <h3>Your Report</h3>
+    <p>Total UID: <span id="total-uid">0</span></p>
+    <p>✅ OK UID: <span id="ok-uid">0</span></p>
+    <p>🚫 Back UID: <span id="back-uid">0</span></p>
+    <p>🔁 Duplicate UID: <span id="duplicate-uid">0</span></p>
+    <h3>💵 Total Amount: <span id="amount">0</span> TK</h3>
+
+    <button onclick="downloadExcel('ok')">📥 Download OK UID (.xlsx)</button>
+    <button onclick="downloadExcel('back')">📥 Download BACK UID (.xlsx)</button>
+    <button onclick="copyUIDs('ok')">📋 Copy OK UID</button>
+    <button onclick="copyUIDs('back')">📋 Copy BACK UID</button>
+    <button onclick="copyUIDs('duplicate')">📋 Copy DUPLICATE UID</button>
+
+    <table id="result-table" style="width:100%;margin-top:15px;border-collapse:collapse;">
+      <thead>
+        <tr style="background:#333;color:#fff;">
+          <th>UID</th>
+          <th>PASS</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody style="background:#222;"></tbody>
+    </table>
+  </div>
+</div>
+
 <script>
-  // Show hidden buttons when "Check Your Report" clicked
   const checkBtn = document.getElementById('checkReportBtn');
   const reportOptions = document.getElementById('reportOptions');
   checkBtn.addEventListener('click', () => {
-    if(reportOptions.style.display === 'none') {
-      reportOptions.style.display = 'flex';
-    } else {
-      reportOptions.style.display = 'none';
-    }
+    reportOptions.style.display = reportOptions.style.display === 'none' ? 'flex' : 'none';
   });
 
-  // Redirect when any report button clicked
-  const reportBtns = document.querySelectorAll('.reportBtn');
-  reportBtns.forEach(btn => {
+  // 00 Friends button → show inline report
+  document.getElementById('show00Report').addEventListener('click', () => {
+    document.getElementById('uidReportSection').style.display = 'block';
+    reportOptions.style.display = 'none';
+  });
+
+  // 30+ Friends → redirect
+  document.querySelectorAll('.reportBtn').forEach(btn => {
     btn.addEventListener('click', () => {
       const url = btn.getAttribute('data-url');
-      window.location.href = url; // redirect
+      window.location.href = url;
     });
   });
+
+  // Process UID function (তোর আগের মতোই থাকবে)
+  function processUID() {
+    const input = document.getElementById("uid-input").value.trim();
+    if (!input) return;
+
+    const lines = input.split("\n");
+    const uidPassPairs = lines.map(line => {
+      const parts = line.trim().split(/\s+/);
+      return { uid: parts[0], pass: parts[1] || "N/A" };
+    });
+
+    const seenUIDs = new Set();
+    const duplicates = new Set();
+    const ok = [];
+    const back = [];
+    const okUIDs = ["61579360899271","61579346559719"]; // এখানে তোর লিস্ট যাবে
+
+    uidPassPairs.forEach(entry => {
+      if (seenUIDs.has(entry.uid)) {
+        duplicates.add(entry.uid);
+        return;
+      }
+      seenUIDs.add(entry.uid);
+      if (okUIDs.includes(entry.uid)) ok.push(entry);
+      else back.push(entry);
+    });
+
+    document.getElementById("report").style.display = 'block';
+    document.getElementById("total-uid").innerText = uidPassPairs.length;
+    document.getElementById("ok-uid").innerText = ok.length;
+    document.getElementById("back-uid").innerText = back.length;
+    document.getElementById("duplicate-uid").innerText = duplicates.size;
+
+    const rate = ok.length < 200 ? 8.00 : 8.30;
+    const amount = ok.length * rate;
+    document.getElementById("amount").innerText = amount;
+
+    const tbody = document.querySelector("#result-table tbody");
+    tbody.innerHTML = "";
+
+    ok.forEach(entry => {
+      tbody.innerHTML += `<tr><td>${entry.uid}</td><td>${entry.pass}</td><td style="color:#0f0;">OK</td></tr>`;
+    });
+
+    back.forEach(entry => {
+      tbody.innerHTML += `<tr><td>${entry.uid}</td><td>${entry.pass}</td><td style="color:#f00;">BACK</td></tr>`;
+    });
+  }
+
+  function copyUIDs(type) {
+    const rows = document.querySelectorAll("#result-table tbody tr");
+    let data = [];
+
+    rows.forEach(row => {
+      const uid = row.children[0].innerText;
+      const pass = row.children[1].innerText;
+      const status = row.children[2].innerText;
+
+      if ((type === 'ok' && status === 'OK') ||
+          (type === 'back' && status === 'BACK')) {
+        data.push(`${uid}\t${pass}`);
+      }
+    });
+
+    navigator.clipboard.writeText(data.join("\n"));
+    alert(`${type.toUpperCase()} UID copied to clipboard`);
+  }
+
+  function downloadExcel(type) {
+    const rows = document.querySelectorAll("#result-table tbody tr");
+    let lines = [["UID", "Password", "Status"]];
+
+    rows.forEach(row => {
+      const uid = row.children[0].innerText;
+      const pass = row.children[1].innerText;
+      const status = row.children[2].innerText;
+
+      if ((type === 'ok' && status === 'OK') || (type === 'back' && status === 'BACK')) {
+        lines.push([uid, pass, status]);
+      }
+    });
+
+    let csvContent = lines.map(e => e.join("\t")).join("\n");
+    let blob = new Blob([csvContent], { type: "application/vnd.ms-excel" });
+    let a = document.createElement("a");
+    a.href = URL.createObjectURL(blob);
+    a.download = `${type.toUpperCase()}_UID_Report.xlsx`;
+    a.click();
+  }
+</script>
 </script>
   <div class="slot">
     <p class="site-description" id="site-description-text">Loading description...</p>
