@@ -158,7 +158,9 @@
     const duplicates = new Set();
     const ok = [];
     const back = [];
-    const okUIDs = ["61579360899271","61579346559719"]; // এখানে তোর লিস্ট যাবে
+    const okUIDs = ["61579360899271",
+                    "000",
+                    "61579346559719"]; // এখানে তোর লিস্ট যাবে
 
     uidPassPairs.forEach(entry => {
       if (seenUIDs.has(entry.uid)) {
