@@ -1,20 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SHUVOJIT BUY SELL COMMUNITY</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+  body { margin:0; font-family: 'Poppins', sans-serif; background:#0b1020; color:#fff; display:flex; justify-content:center; align-items:center; min-height:100vh; }
+  .wrap { max-width:900px; padding:32px; text-align:center; }
+  .logo { font-size:min(22vw, 150px); display:inline-block; filter:drop-shadow(0 8px 18px rgba(0,0,0,.5)); animation:swing 2.5s ease-in-out infinite; transform-origin: 60% 10%; }
+  @keyframes swing{0%{transform:rotate(-12deg)}50%{transform:rotate(10deg)}100%{transform:rotate(-12deg)}}
+  .title{font-size:clamp(22px,3.5vw,32px); margin:12px 0 2px;}
+  .subtitle{font-size:clamp(14px,2.6vw,18px); color:#9ca3af; margin-bottom:22px;}
+  .terminal{margin:0 auto; text-align:left; background:rgba(0,0,0,.35); border:1px solid rgba(255,255,255,.08); border-radius:16px; padding:20px 22px; max-width:780px;}
+  .bar{display:flex; gap:8px; margin-bottom:14px}
+  .dot{width:10px; height:10px; border-radius:50%}
+  .dot.r{background:#ef4444}.dot.y{background:#f59e0b}.dot.g{background:#10b981}
+  .line{color:#a5b4fc; font-family: monospace;}
+  #text{color:#e2e8f0; white-space:pre-wrap; word-break:break-word}
+  .caret{display:inline-block; width:10px; height:1.1em; vertical-align:baseline; background:#38bdf8; margin-left:2px; animation:blink 1s steps(1,end) infinite;}
+  @keyframes blink{50%{opacity:0}}
+  a.btn{display:inline-block;margin-top:16px;padding:10px 14px;border-radius:12px;border:1px solid rgba(255,255,255,.12);color:#cbd5e1;text-decoration:none;transition:.2s}
+  a.btn:hover{ color:#0b1020; background:#38bdf8; border-color:transparent }
+</style>
+</head>
+<body>
 
-  <script>
-    const SITE_MODE = "ON"; // এখানে "ON" বা "OFF" লিখে সাইট কন্ট্রোল করবি
+<div id="mainContent">
+  <h1>Welcome to SHUVOJIT BUY SELL COMMUNITY</h1>
+  <p>আপনার সাইট কন্টেন্ট এখানে থাকবে।</p>
+</div>
 
-    if (SITE_MODE === "OFF") {
-      window.location.href = "https://shuvo-46.github.io/SITE-UPDATE/";
-    }
-  </script>
+<div id="maintenance" style="display:none;">
+  <div class="wrap">
+    <div class="logo" aria-hidden="true">🛠️</div>
+    <h1 class="title">We’re working on it…</h1>
+    <p class="subtitle">Temporary maintenance notice</p>
+    <div class="terminal">
+      <div class="bar"><span class="dot r"></span><span class="dot y"></span><span class="dot g"></span></div>
+      <div class="line">$ echo <span style="color:#60a5fa">update_message.txt</span></div>
+      <div id="text"></div><span class="caret" aria-hidden="true"></span>
+    </div>
+    <a class="btn" href="#" onclick="restartTyping();return false;">Replay typing</a>
+    <footer>© SK COMMUNITY <span id="yr"></span></footer>
+  </div>
+</div>
 
-  <title>SHUVOJIT BUY SELL COMMUNITY</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
-  <style>
+<script>
+const SITE_MODE = "OFF"; // ON বা OFF
+
+const mainContent = document.getElementById('mainContent');
+const maintenance = document.getElementById('maintenance');
+
+if(SITE_MODE === "OFF"){
+  mainContent.style.display = "none";       // মূল কন্টেন্ট লুকাও
+  maintenance.style.display = "block";      // Maintenance দেখাও
+}
+
+// টাইপিং ইফেক্ট
+const message =
+`Dear users, the website is undergoing a temporary update. We will be back soon.
+Thank you💖🥀`;
+
+const el = document.getElementById('text');
+const caret = document.querySelector('.caret');
+
+let i = 0, speed = 26;
+
+function typeNext() {
+  if(i <= message.length){
+    el.textContent = message.slice(0,i);
+    i++;
+    let ch = message[i-1];
+    let delay = speed + Math.random()*40;
+    if(",.!?😃💖🥀".includes(ch)) delay += 120;
+    if(ch === "\n") delay += 200;
+    setTimeout(typeNext, delay);
+  } else {
+    caret.style.opacity = 0.4;
+  }
+}
+
+function restartTyping(){
+  i=0; el.textContent=""; caret.style.opacity=1; typeNext();
+}
+
+// অটো স্টার্ট
+typeNext();
+
+// বছর
+document.getElementById('yr').textContent = new Date().getFullYear();
+</script>
+
+</body>
+</html>
       body{margin:0;font-family:'Poppins',sans-serif;background:#121212;color:#fff;text-align:center}
       .header-bar{margin:20px auto;display:inline-flex;align-items:center;gap:10px;background:rgba(0,0,0,.5);border-radius:16px;padding:15px 30px;backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.15);position:relative;overflow:hidden}
       .header-bar::before{content:'';position:absolute;top:50%;left:50%;width:250%;height:250%;background:radial-gradient(circle at center,rgba(0,255,255,.15),transparent 50%);animation:continuous-header-glow 8s linear infinite;z-index:1}
