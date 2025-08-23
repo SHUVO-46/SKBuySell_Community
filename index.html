@@ -184,8 +184,7 @@
         container.innerHTML = sellers.map(seller => {
             const product = products.find(p => p.name === seller.product);
             const logo = product ? product.logo : 'https://i.imgur.com/sF4J6Uj.png';
-            const statusHtml = seller.status.toLowerCase() === 'received' ? `<div class="status-box">🟢Received <div class="status-glow"></div></div>` : `<div class="status-box"><span class="loader-mini"></span> Waiting...</div>`;
-            const statusHtml = seller.status.toLowerCase() === 'rejected' ? `<div class="status-box">🔴Rejected <div class="status-glow"></div></div>` : `<div class="status-box"><span class="loader-mini"></span> Waiting...</div>`;
+            const statusHtml = seller.status.toLowerCase() === 'received' ? `<div class="status-box">Received <div class="status-glow"></div></div>` : `<div class="status-box"><span class="loader-mini"></span> Waiting...</div>`;
             return `<div class="seller-row"><div class="seller-info"><img src="${logo}" alt="${seller.product} logo"><span>${seller.name.toUpperCase()}</span></div>${statusHtml}</div>`;
         }).join('');
     }
