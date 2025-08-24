@@ -82,8 +82,8 @@
 <!-- Hidden UID Report Section -->
 <div id="uidReportSection" style="display:none; max-width:900px; margin:40px auto; padding:20px; border:1px solid #ddd; border-radius:10px; background:#111; color:#fff;">
   <h2 id="reportTitle" style="text-align:center;">00 Friends Two Factor Report</h2>
-  <p>Member Rate: <span id="member-rate">8.00</span> TK</p>
-  <p>200+ Rate: <span id="admin-rate">8.30</span> TK</p>
+  <p>Member Rate: <span id="member-rate">8.20</span> TK</p>
+  <p>200+ Rate: <span id="admin-rate">8.50</span> TK</p>
 
   <textarea id="uid-input" placeholder="Paste UID & PASS here... (UID[TAB]PASS)"
     style="width:100%;height:150px;margin:15px 0;padding:10px;border-radius:8px;border:1px solid #555;background:#222;color:#fff;"></textarea>
@@ -152,8 +152,8 @@
   document.getElementById('show00Report').addEventListener('click', () => {
     currentReportType = '00';
     document.getElementById('reportTitle').innerText = "00 Friends Two Factor Report";
-    document.getElementById('member-rate').innerText = "8.00";
-    document.getElementById('admin-rate').innerText = "8.30";
+    document.getElementById('member-rate').innerText = "8.20";
+    document.getElementById('admin-rate').innerText = "8.50";
     document.getElementById('uidReportSection').style.display = 'block';
     reportOptions.style.display = 'none';
   });
