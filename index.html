@@ -6,57 +6,54 @@
   <title>SHUVOJIT BUY SELL COMMUNITY</title>
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
   <style>
-      body{margin:0;font-family:'Poppins',sans-serif;background:#121212;color:#fff;text-align:center}
+      body { margin:0; font-family:'Poppins',sans-serif; background:#121212; color:#fff; text-align:center; }
+
+      /* Header */
       .header-bar{margin:20px auto;display:inline-flex;align-items:center;gap:10px;background:rgba(0,0,0,.5);border-radius:16px;padding:15px 30px;backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.15);position:relative;overflow:hidden}
       .header-bar::before{content:'';position:absolute;top:50%;left:50%;width:250%;height:250%;background:radial-gradient(circle at center,rgba(0,255,255,.15),transparent 50%);animation:continuous-header-glow 8s linear infinite;z-index:1}
       @keyframes continuous-header-glow{0%{transform:translate(-50%,-50%) rotate(0deg)}100%{transform:translate(-50%,-50%) rotate(360deg)}}
       .site-name{font-family:'Orbitron',sans-serif;font-size:1.6em;font-weight:700;display:flex;gap:5px;position:relative;z-index:2}
       .site-name .b{color:#00ff00}.site-name .d{color:red}
-      .site-description{font-family:'Poppins',sans-serif;font-size:.9em;color:#ccc;padding:5px 15px}
-      .slot{background:rgba(0,0,0,.5);backdrop-filter:blur(12px);padding:20px;margin:30px auto;width:90%;max-width:550px;border-radius:16px;position:relative;overflow:hidden;transition:.4s;box-shadow:0 0 14px rgba(0,0,0,.4);border:1px solid rgba(255,255,255,.1)}
-      .slot::before{content:'';position:absolute;top:-120%;left:-120%;width:240%;height:240%;background:radial-gradient(circle at center,rgba(0,255,255,.15),transparent 60%);transform:rotate(25deg);transition:.8s;z-index:1}
-      .slot:hover::before{top:0;left:0}
-      .slot:hover{transform:translateY(-6px);box-shadow:0 8px 25px rgba(0,255,255,.1)}
-      .slot-header,.expand-area,.seller-list,h2,.site-description{position:relative;z-index:2}
-      .slot-header{display:flex;align-items:center;justify-content:space-between;gap:15px}
-      .slot-header img{height:36px}
-      .slot-info{flex:1;text-align:left}
-      .slot-price{font-weight:700;color:#ff4d4d}
-      .sell-now{background:#fff;padding:10px 20px;border:none;color:#000;font-weight:700;border-radius:8px;cursor:pointer;transition:background-color .3s ease}
-      .sell-now:hover{background-color:#e0e0e0}
-      .expand-area{display:none;margin-top:20px;text-align:left}
-      .expand-area input[type=text]{width:calc(100% - 24px);padding:12px;margin:12px 0;border-radius:8px;border:1px solid rgba(255,255,255,.1);background:#1e1e1e;color:#fff}
-      .submit-btn{padding:12px 25px;background:linear-gradient(45deg,#00aaff,#0077cc);color:#fff;font-weight:700;border:none;border-radius:10px;cursor:pointer;transition:background .3s ease}
-      .submit-btn:hover{background:linear-gradient(45deg,#0099e6,#0066b3)}
-      .waiting-area{display:none;margin-top:15px;color:#bbb;font-weight:600;display:flex;align-items:center;justify-content:center}
-      .loader,.loader-mini{border:2px solid #fff;border-top:2px solid transparent;border-radius:50%;animation:spin 1s linear infinite}
-      .loader{width:14px;height:14px;margin-right:8px}
-      .loader-mini{width:12px;height:12px}
-      .pay-method{background:#555;color:#fff;border:none;padding:10px 18px;border-radius:8px;cursor:pointer;font-weight:700;transition:background .3s ease}
-      .pay-method:hover{background:#777}
-      .seller-list{max-height:240px;overflow-y:auto;padding-right:8px}
-      .seller-row{display:flex;justify-content:space-between;align-items:center;background:rgba(255,255,255,.03);border-radius:12px;padding:12px 16px;margin:10px 0}
-      .seller-info{display:flex;align-items:center;gap:10px;font-weight:600}
-      .seller-info img{width:22px;height:22px}
-      .status-box{font-weight:700;display:flex;align-items:center;gap:8px}
-      .status-glow{width:10px;height:10px;border-radius:50%;background:#fff;box-shadow:0 0 6px #fff,0 0 12px #0ff;animation:glow 1.6s ease-in-out alternate infinite}
-      @keyframes glow{0%{opacity:.3}50%{opacity:1}100%{opacity:.3}}
-      @keyframes spin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
-      .telegram-link{margin-top:40px;margin-bottom:40px}
-      .telegram-link a{display:inline-flex;align-items:center;gap:10px;color:#00aaff;font-weight:700;font-size:18px;text-decoration:none;background:rgba(0,0,0,.3);padding:12px 22px;border-radius:15px;transition:all .3s ease;border:1px solid rgba(255,255,255,.1)}
-      .telegram-link a:hover{background:rgba(0,170,255,.15);color:#33bbff}
-      .telegram-link img{width:24px;height:24px}
-      .seller-list::-webkit-scrollbar{width:6px}
-      .seller-list::-webkit-scrollbar-thumb{background:#555;border-radius:4px}
-      .error-message{color:red;font-weight:600;}
+
+      /* Maintenance Screen */
+      #maintenance-screen {
+        display:none;
+        position:fixed;top:0;left:0;width:100%;height:100%;
+        background:#111;color:#fff;
+        display:flex;flex-direction:column;justify-content:center;align-items:center;
+        text-align:center;z-index:9999;
+      }
+      .maintenance-logo {
+        font-size: 100px;
+        animation: float 2s infinite alternate;
+      }
+      @keyframes float {
+        0% { transform: translateY(0px); }
+        100% { transform: translateY(-15px); }
+      }
+      .maintenance-line {
+        width: 120px;
+        height: 4px;
+        background: #00aaff;
+        margin: 20px 0;
+        animation: lineMove 1s infinite alternate;
+      }
+      @keyframes lineMove {
+        0% { transform: scaleX(0.2); }
+        100% { transform: scaleX(1); }
+      }
+      #maintenance-screen p {
+        font-size: 18px;
+        font-weight: 600;
+        color: #ccc;
+        line-height: 1.5;
+      }
   </style>
 </head>
 <body>
-  <!-- Maintenance Mode -->
-<div id="maintenance-screen" style="display:none;
-  position:fixed;top:0;left:0;width:100%;height:100%;
-  background:#111;color:#fff;display:flex;flex-direction:column;
-  justify-content:center;align-items:center;text-align:center;z-index:9999;">
+
+<!-- Maintenance Mode -->
+<div id="maintenance-screen">
   <div class="maintenance-logo">🛠️</div>
   <div class="maintenance-line"></div>
   <p>This website is in maintenance mode.<br>We'll be back soon!</p>
@@ -64,60 +61,33 @@
 
 <script>
 // 'ON' = Normal website, 'OFF' = Maintenance mode
-const websiteMode = 'ON'; 
+const websiteMode = 'ON'; // <-- এখানে ON বা OFF লিখে নিয়ন্ত্রণ করবে
 
 document.addEventListener("DOMContentLoaded", () => {
   if (websiteMode === 'OFF') {
-    // Hide everything except maintenance screen
-    Array.from(document.body.children).forEach(el => {
-      if (el.id !== 'maintenance-screen') el.style.display = 'none';
-    });
     document.getElementById('maintenance-screen').style.display = 'flex';
+    document.querySelectorAll('body > *:not(#maintenance-screen)').forEach(el => {
+      el.style.display = 'none';
+    });
+  } else {
+    document.getElementById('maintenance-screen').style.display = 'none';
   }
 });
 </script>
 
-<style>
-.maintenance-logo {
-  font-size: 100px;
-  animation: float 2s infinite alternate;
-}
-@keyframes float {
-  0% { transform: translateY(0px); }
-  100% { transform: translateY(-15px); }
-}
-.maintenance-line {
-  width: 120px;
-  height: 4px;
-  background: #00aaff;
-  margin: 20px 0;
-  animation: lineMove 1s infinite alternate;
-}
-@keyframes lineMove {
-  0% { transform: scaleX(0.2); }
-  100% { transform: scaleX(1); }
-}
-#maintenance-screen p {
-  font-size: 18px;
-  font-weight: 600;
-  color: #ccc;
-  line-height: 1.5;
-}
-</style>
-
-  <div class="header-bar">
-    <div class="site-name">
-      <span class="b">S</span><span class="d">K</span>
-      <span>COMMUNITY</span>
-    </div>
+<!-- Main Content -->
+<div class="header-bar">
+  <div class="site-name">
+    <span class="b">S</span><span class="d">K</span>
+    <span>COMMUNITY</span>
   </div>
-  <!-- Check Your Report Section -->
+</div>
+
 <div class="report-section" style="margin:40px auto;text-align:center;">
   <button id="checkReportBtn" style="padding:18px 40px;font-size:20px;font-weight:700;border:none;border-radius:12px;cursor:pointer;background:linear-gradient(45deg,#00aaff,#0077cc);color:#fff;transition:0.3s;">
     Check Your Report
   </button>
 
-  <!-- Hidden buttons -->
   <div id="reportOptions" style="margin-top:20px; display:none; gap:20px; flex-wrap:wrap; justify-content:center;">
     <button id="show00Report" style="padding:14px 28px;font-size:16px;font-weight:600;border:none;border-radius:10px;cursor:pointer;background:#00ff88;color:#000;transition:0.3s;margin:6px;">
       00 Friends ID
