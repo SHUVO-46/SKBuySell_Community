@@ -59,8 +59,6 @@
       <span>COMMUNITY</span>
     </div>
   </div>
-
-
   <!-- Check Your Report Section -->
 <div class="report-section" style="margin:40px auto;text-align:center;">
   <button id="checkReportBtn" style="padding:18px 40px;font-size:20px;font-weight:700;border:none;border-radius:12px;cursor:pointer;background:linear-gradient(45deg,#00aaff,#0077cc);color:#fff;transition:0.3s;">
@@ -72,7 +70,7 @@
     <button id="show00Report" style="padding:14px 28px;font-size:16px;font-weight:600;border:none;border-radius:10px;cursor:pointer;background:#00ff88;color:#000;transition:0.3s;margin:6px;">
       00 Friends ID
     </button>
-    <button class="reportBtn" data-url="https://shuvo-46.github.io/SITE-UPDATE/" style="padding:14px 28px;font-size:16px;font-weight:600;border:none;border-radius:10px;cursor:pointer;background:#ffaa00;color:#000;transition:0.3s;margin:6px;">
+    <button id="show30Report" style="padding:14px 28px;font-size:16px;font-weight:600;border:none;border-radius:10px;cursor:pointer;background:#ffaa00;color:#000;transition:0.3s;margin:6px;">
       30+ Friends ID
     </button>
     <button id="backHomeBtn" style="padding:14px 28px;font-size:16px;font-weight:600;border:none;border-radius:10px;cursor:pointer;background:#888;color:#fff;transition:0.3s;margin:6px;">
@@ -83,7 +81,7 @@
 
 <!-- Hidden UID Report Section -->
 <div id="uidReportSection" style="display:none; max-width:900px; margin:40px auto; padding:20px; border:1px solid #ddd; border-radius:10px; background:#111; color:#fff;">
-  <h2 style="text-align:center;">00 Friends Two Factor Report</h2>
+  <h2 id="reportTitle" style="text-align:center;">00 Friends Two Factor Report</h2>
   <p>Member Rate: <span id="member-rate">8.00</span> TK</p>
   <p>200+ Rate: <span id="admin-rate">8.30</span> TK</p>
 
@@ -127,6 +125,8 @@
 </div>
 
 <script>
+  let currentReportType = '00'; // Default report type
+
   const checkBtn = document.getElementById('checkReportBtn');
   const reportOptions = document.getElementById('reportOptions');
   const backHomeBtn = document.getElementById('backHomeBtn');
@@ -150,16 +150,22 @@
 
   // 00 Friends button → show inline report
   document.getElementById('show00Report').addEventListener('click', () => {
+    currentReportType = '00';
+    document.getElementById('reportTitle').innerText = "00 Friends Two Factor Report";
+    document.getElementById('member-rate').innerText = "8.00";
+    document.getElementById('admin-rate').innerText = "8.30";
     document.getElementById('uidReportSection').style.display = 'block';
     reportOptions.style.display = 'none';
   });
 
-  // 30+ Friends → redirect
-  document.querySelectorAll('.reportBtn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      const url = btn.getAttribute('data-url');
-      window.location.href = url;
-    });
+  // 30+ Friends button → same style report
+  document.getElementById('show30Report').addEventListener('click', () => {
+    currentReportType = '30';
+    document.getElementById('reportTitle').innerText = "30+ Friends Two Factor Report";
+    document.getElementById('member-rate').innerText = "12.20";
+    document.getElementById('admin-rate').innerText = "12.50";
+    document.getElementById('uidReportSection').style.display = 'block';
+    reportOptions.style.display = 'none';
   });
 
   // --- UID Processing & Amount Calculation ---
@@ -177,70 +183,12 @@
     const duplicates = new Set();
     const ok = [];
     const back = [];
-    const okUIDs = ["61579780348554",
-"61579809567601",
-"61579354753100",
-"61579725899683",
-"61579726380170",
-"61579369932549",
-"61579681048794",
-"61579628550987",
-"61579402450262",
-"61579595135283",
-"61579691161336",
-"61579714261692",
-"61579734481184",
-"61579759287413",
-"61579625795586",
-"61579606716712",
-"61579714947885",
-"61579642950569",
-"61579786078248",
-"61579721815409",
-"61579623869547",
-"61579342449670",
-"61579274952781",
-"61579303875792",
-"61579889061319",
-"61579338644424",
-"61579443065338",
-"61579219605985",
-"61579370198557",
-"61579577587602",
-"61579200797012",
-"61579883843937",
-"61579631971208",
-"61579814937098",
-"61579846552444",
-"61579870340591",
-"61579491878943",
-"61579415226213",
-"61579758359654",
-"61579840251988",
-"61579822583522",
-"61579612686065",
-"61579292323741",
-"61579449398054",
-"61579611485957",
-"61579847515625",
-"61579735590878",
-"61579365279860",
-"61579459747541",
-"61579570058000",
-"61579907573153",
-"61579736550955",
-"61579891973904",
-"61579765319389",
-"61579678983431",
-"61579315755562",
-"61579650064179",
-"61579940961341",
-"61579406890939",
-"61579891163871",
-"61579265927967",
-"61579646945077",
-"61579411986525",
-"61579390211196"]; // এখানে তোর লিস্ট যাবে
+
+    // আলাদা UID লিস্ট (প্রয়োজনে দুটি আলাদা করা যাবে)
+    const okUIDs_00 = ["61579780348554","61579809567601"]; // Demo 00 list
+    const okUIDs_30 = ["71579780348554","71579809567601"]; // Demo 30+ list
+
+    const okUIDs = currentReportType === '30' ? okUIDs_30 : okUIDs_00;
 
     uidPassPairs.forEach(entry => {
       if (seenUIDs.has(entry.uid)) { duplicates.add(entry.uid); return; }
@@ -255,7 +203,14 @@
     document.getElementById("back-uid").innerText = back.length;
     document.getElementById("duplicate-uid").innerText = duplicates.size;
 
-    const rate = ok.length < 200 ? 8.00 : 8.30;
+    // Dynamic rate
+    let rate;
+    if (currentReportType === '30') {
+      rate = ok.length < 50 ? 12.20 : 12.50;
+    } else {
+      rate = ok.length < 200 ? 8.00 : 8.30;
+    }
+
     const amount = ok.length * rate;
     document.getElementById("amount").innerText = amount;
 
@@ -298,9 +253,6 @@
     a.download = `${type.toUpperCase()}_UID_Report.xlsx`;
     a.click();
   }
-</script>
-
-
 </script>
   <div class="slot">
     <p class="site-description" id="site-description-text">Loading description...</p>
