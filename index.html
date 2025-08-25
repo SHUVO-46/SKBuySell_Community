@@ -49,6 +49,14 @@
       .seller-list::-webkit-scrollbar{width:6px}
       .seller-list::-webkit-scrollbar-thumb{background:#555;border-radius:4px}
       .error-message{color:red;font-weight:600;}
+    .status-glow-reject {
+    width:10px;
+    height:10px;
+    border-radius:50%;
+    background:red;
+    box-shadow:0 0 6px red,0 0 12px red;
+    animation:glow 1.6s ease-in-out alternate infinite;
+}
     /* Maintenance Screen */
       #maintenance-screen {
         display:none;
@@ -496,16 +504,39 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function displaySellers(sellers, products) {
-        const container = document.getElementById('seller-list-container');
-        if (!sellers || sellers.length === 0) { container.innerHTML = '<div style="padding: 10px;">No sellers yet.</div>'; return; }
-        sellers.sort((a, b) => (a.status.toLowerCase() === 'waiting' && b.status.toLowerCase() !== 'waiting' ? -1 : 1));
-        container.innerHTML = sellers.map(seller => {
-            const product = products.find(p => p.name === seller.product);
-            const logo = product ? product.logo : 'https://i.imgur.com/sF4J6Uj.png';
-            const statusHtml = seller.status.toLowerCase() === 'received' ? `<div class="status-box">Received <div class="status-glow"></div></div>` : `<div class="status-box"><span class="loader-mini"></span> Waiting...</div>`;
-            return `<div class="seller-row"><div class="seller-info"><img src="${logo}" alt="${seller.product} logo"><span>${seller.name.toUpperCase()}</span></div>${statusHtml}</div>`;
-        }).join('');
+    const container = document.getElementById('seller-list-container');
+    if (!sellers || sellers.length === 0) {
+        container.innerHTML = '<div style="padding: 10px;">No sellers yet.</div>';
+        return;
     }
+
+    // Waiting priority
+    sellers.sort((a, b) => (a.status.toLowerCase() === 'waiting' && b.status.toLowerCase() !== 'waiting' ? -1 : 1));
+
+    container.innerHTML = sellers.map(seller => {
+        const product = products.find(p => p.name === seller.product);
+        const logo = product ? product.logo : 'https://i.imgur.com/sF4J6Uj.png';
+
+        let statusHtml = '';
+        const statusLower = seller.status.toLowerCase();
+
+        if (statusLower === 'received') {
+            statusHtml = `<div class="status-box">Received <div class="status-glow"></div></div>`;
+        } else if (statusLower === 'rejected') {
+            statusHtml = `<div class="status-box">Rejected <div class="status-glow-reject"></div></div>`;
+        } else {
+            statusHtml = `<div class="status-box"><span class="loader-mini"></span> Waiting...</div>`;
+        }
+
+        return `<div class="seller-row">
+                    <div class="seller-info">
+                        <img src="${logo}" alt="${seller.product} logo">
+                        <span>${seller.name.toUpperCase()}</span>
+                    </div>
+                    ${statusHtml}
+                </div>`;
+    }).join('');
+}
 
     function toggleExpand(btn) { const ex = btn.closest('.slot').querySelector('.expand-area'); ex.style.display = ex.style.display === 'block' ? 'none' : 'block'; }
     
