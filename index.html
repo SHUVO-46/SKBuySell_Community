@@ -421,10 +421,19 @@ document.addEventListener("DOMContentLoaded", () => {
     }
     setInterval(loadWebsiteData, 60000);
     function displaySettings(settings) {
-        const descElement = document.getElementById('site-description-text');
-        if (settings && settings.SiteDescription) { descElement.textContent = settings.SiteDescription; } 
-        else { descElement.textContent = "Welcome to our marketplace!"; }
+    const descElement = document.getElementById('site-description-text');
+    // white-space: pre-line; CSS সেট করা
+    descElement.style.whiteSpace = "pre-line";
+
+    if (settings && settings.SiteDescription) {
+        descElement.textContent = settings.SiteDescription;
+    } else {
+        descElement.textContent = 
+`🕙 Submit last time: 10:00 pm
+📄 Sheet: uid | pass | 2fa | mail
+🟢 Fresh ID Report: 95%-100%`;
     }
+}
 
     function displayProducts(products) {
         const container = document.getElementById('product-slots-container');
