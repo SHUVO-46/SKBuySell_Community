@@ -213,9 +213,9 @@ document.addEventListener("DOMContentLoaded", () => {
   // 00 Friends button → show inline report
   document.getElementById('show00Report').addEventListener('click', () => {
     currentReportType = '00';
-    document.getElementById('reportTitle').innerText = "05 Date 00 Friends Two Factor Report";
-   // document.getElementById('member-rate').innerText = "8.50";
-   // document.getElementById('admin-rate').innerText = "8.70";
+    document.getElementById('reportTitle').innerText = "06 Date 00 Friends Two Factor Report";
+   // document.getElementById('member-rate').innerText = "7.00";
+   // document.getElementById('admin-rate').innerText = "7.00";
     document.getElementById('uidReportSection').style.display = 'block';
     reportOptions.style.display = 'none';
   });
@@ -247,55 +247,27 @@ document.addEventListener("DOMContentLoaded", () => {
     const back = [];
 
     // আলাদা UID লিস্ট (প্রয়োজনে দুটি আলাদা করা যাবে)
-    const okUIDs_00 = ["61580237975967",
-"61580362289866",
-"61580283513544",
-"61580129442372",
-"61580159441063",
-"61580189498340",
-"61580453364944",
-"61580162439613",
-"61580177589097",
-"61580502472495",
-"61580512731950",
-"61580094403481",
-"61580366459915",
-"61580094523638",
-"61580131811738",
-"61580075984729",
-"61580390938960",
-"61580070165070",
-"61580302773266",
-"61580154340540",
-"61580043286131",
-"61580220306997",
-"61580371739689",
-"61580266685098",
-"61580483302507",
-"61580342940292",
-"61580415086879",
-"61580455884866",
-"61580487083286",
-"61580390788023",
-"61580175999103",
-"61580085763626",
-"61580314262042",
-"61580246675514",
-"61580285463995",
-"61580336911377",
-"61580293173483",
-"61580142401237",
-"61580113062810",
-"61580407228000",
-"61580106193575",
-"61580027327613",
-"61580192619187",
-"61580096834027",
-"61580529502040",
-"61580255496290",
-"61579830890325",
-"61580166250703",
-"61580289604349"]; // Demo 00 list
+    const okUIDs_00 = ["61580272536814",
+"61580364422127",
+"61580487805938",
+"61580463777194",
+"61580099505641",
+"61580175371518",
+"61580438548454",
+"61580102205356",
+"61580600180746",
+"61580212809685",
+"61580515794439",
+"61580260987496",
+"61580171021910",
+"61580195530918",
+"61580529803843",
+"61580388030396",
+"61579771221291",
+"61580339192720",
+"61579777131289",
+"61580357821717",
+"61580389410420"]; // Demo 00 list
     const okUIDs_30 = []; // Demo 30+ list
 
     const okUIDs = currentReportType === '30' ? okUIDs_30 : okUIDs_00;
@@ -318,7 +290,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (currentReportType === '30') {
       rate = ok.length < 100 ? 12.00 : 12.30;
     } else {
-      rate = ok.length < 200 ? 8.50 : 8.70;
+      rate = ok.length < 200 ? 7.00 : 7.00;
     }
 
     const amount = ok.length * rate;
