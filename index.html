@@ -213,7 +213,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // 00 Friends button → show inline report
   document.getElementById('show00Report').addEventListener('click', () => {
     currentReportType = '00';
-    document.getElementById('reportTitle').innerText = "06 Date 00 Friends Two Factor Report";
+    document.getElementById('reportTitle').innerText = "07 Date 00 Friends Two Factor Report";
    // document.getElementById('member-rate').innerText = "7.00";
    // document.getElementById('admin-rate').innerText = "7.00";
     document.getElementById('uidReportSection').style.display = 'block';
@@ -247,27 +247,43 @@ document.addEventListener("DOMContentLoaded", () => {
     const back = [];
 
     // আলাদা UID লিস্ট (প্রয়োজনে দুটি আলাদা করা যাবে)
-    const okUIDs_00 = ["61580272536814",
-"61580364422127",
-"61580487805938",
-"61580463777194",
-"61580099505641",
-"61580175371518",
-"61580438548454",
-"61580102205356",
-"61580600180746",
-"61580212809685",
-"61580515794439",
-"61580260987496",
-"61580171021910",
-"61580195530918",
-"61580529803843",
-"61580388030396",
-"61579771221291",
-"61580339192720",
-"61579777131289",
-"61580357821717",
-"61580389410420"]; // Demo 00 list
+    const okUIDs_00 = ["61579816404425",
+"61579833084669",
+"61580201532956",
+"61580519276894",
+"61580310607602",
+"61580271368204",
+"61580494196795",
+"61580602612505",
+"61580199042137",
+"61580541804728",
+"61580164513920",
+"61580484387543",
+"61580220671513",
+"61580130045488",
+"61580173603755",
+"61580265729056",
+"61580126056087",
+"61580120956677",
+"61580178433614",
+"61580636061128",
+"61580542795823",
+"61580272659085",
+"61580433481116",
+"61580200573102",
+"61580373693760",
+"61580399012527",
+"61580498937406",
+"61580509556682",
+"61580527376027",
+"61580499327958",
+"61580215225222",
+"61580161814322",
+"61580162985027",
+"61580635642085",
+"61580115287509",
+"61580647251342",
+"61580096807681"]; // Demo 00 list
     const okUIDs_30 = []; // Demo 30+ list
 
     const okUIDs = currentReportType === '30' ? okUIDs_30 : okUIDs_00;
