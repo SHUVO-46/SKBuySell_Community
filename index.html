@@ -213,7 +213,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // 00 Friends button → show inline report
   document.getElementById('show00Report').addEventListener('click', () => {
     currentReportType = '00';
-    document.getElementById('reportTitle').innerText = "08 Date 00 Friends Two Factor Report";
+    document.getElementById('reportTitle').innerText = "10 Date 00 Friends Two Factor Report";
    // document.getElementById('member-rate').innerText = "7.00";
    // document.getElementById('admin-rate').innerText = "7.00";
     document.getElementById('uidReportSection').style.display = 'block';
@@ -247,16 +247,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const back = [];
 
     // আলাদা UID লিস্ট (প্রয়োজনে দুটি আলাদা করা যাবে)
-    const okUIDs_00 = ["61579837527727",
-"61580395326529",
-"61580297080927",
-"61580717961751",
-"61580380596944",
-"61580229044320",
-"61580678153350",
-"61580456792787",
-"61580836490400",
-"61580351588055"]; // Demo 00 list
+    const okUIDs_00 = ["61580548351134",
+"61580629977842",
+"61580530051303",
+"61580475544034"]; // Demo 00 list
     const okUIDs_30 = []; // Demo 30+ list
 
     const okUIDs = currentReportType === '30' ? okUIDs_30 : okUIDs_00;
