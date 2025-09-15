@@ -213,7 +213,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // 00 Friends button → show inline report
   document.getElementById('show00Report').addEventListener('click', () => {
     currentReportType = '00';
-    document.getElementById('reportTitle').innerText = "13 Date 00 Friends Two Factor Report";
+    document.getElementById('reportTitle').innerText = "14 Date 00 Friends Two Factor Report";
    // document.getElementById('member-rate').innerText = "7.00";
    // document.getElementById('admin-rate').innerText = "7.00";
     document.getElementById('uidReportSection').style.display = 'block';
@@ -247,40 +247,28 @@ document.addEventListener("DOMContentLoaded", () => {
     const back = [];
 
     // আলাদা UID লিস্ট (প্রয়োজনে দুটি আলাদা করা যাবে)
-    const okUIDs_00 = ["61580727150712",
-"61580425183535",
-"61580830259050",
-"61580885818350",
-"61580886117374",
-"61580852428466",
-"61580359607169",
-"61580922355038",
-"61580498381364",
-"61580512360440",
-"61580944375343",
-"61580564645909",
-"61580731142261",
-"61580452333675",
-"61580454461933",
-"61580853299448",
-"61580876968656",
-"61580997682477",
-"61580661963854",
-"61580414204965",
-"61580604576594",
-"61580763031120",
-"61580534529277",
-"61580850565697",
-"61580926436133",
-"61580388136881",
-"61580637094830",
-"61580618436176",
-"61580533539481",
-"61580692113270",
-"61580958595201",
-"61580666493951",
-"61580437124444",
-"61580622545857"]; // Demo 00 list
+    const okUIDs_00 = ["61580899830129",
+"61579836370581",
+"61580974374860",
+"61580415376232",
+"61580493882367",
+"61580695473882",
+"61580954396360",
+"61580548690412",
+"61580504472491",
+"61580998284993",
+"61581030773724",
+"61580565639280",
+"61580603018495",
+"61580473364900",
+"61580766063720",
+"61580656236748",
+"61580678015876",
+"61580983706065",
+"61581019645080",
+"61580597319143",
+"61580614328618",
+"61580552800154"]; // Demo 00 list
     const okUIDs_30 = []; // Demo 30+ list
 
     const okUIDs = currentReportType === '30' ? okUIDs_30 : okUIDs_00;
