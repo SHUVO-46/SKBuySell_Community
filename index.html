@@ -102,7 +102,7 @@
 
 <script>
 // 'ON' = Normal website, 'ON' = Maintenance mode
-const websiteMode = 'OFF'; // <-- এখানে ON বা OFF লিখে নিয়ন্ত্রণ করবে
+const websiteMode = 'ON'; // <-- এখানে ON বা OFF লিখে নিয়ন্ত্রণ করবে
 
 document.addEventListener("DOMContentLoaded", () => {
   if (websiteMode === 'OFF') {
@@ -277,7 +277,7 @@ document.addEventListener("DOMContentLoaded", () => {
 "61580944395898",
 "61581202593840",
 "61581423172263",
-"6158138,2944372",
+"61581382944372",
 "61581373105147",
 "61581182163918",
 "61581417621832",
@@ -440,7 +440,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (currentReportType === '30') {
       rate = ok.length < 100 ? 12.00 : 12.30;
     } else {
-      rate = ok.length < 50 ? 6.00 : 6.30;
+      rate = ok.length < 50 ? 6.00 : 6.00;
     }
 
     const amount = ok.length * rate;
