@@ -102,7 +102,7 @@
 
 <script>
 // 'ON' = Normal website, 'OFF' = Maintenance mode
-const websiteMode = 'OFF'; // <-- এখানে ON বা OFF লিখে নিয়ন্ত্রণ করবে
+const websiteMode = 'ON; // <-- এখানে ON বা OFF লিখে নিয়ন্ত্রণ করবে
 
 document.addEventListener("DOMContentLoaded", () => {
   if (websiteMode === 'OFF') {
@@ -213,7 +213,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // 00 Friends button → show inline report
   document.getElementById('show00Report').addEventListener('click', () => {
     currentReportType = '00';
-    document.getElementById('reportTitle').innerText = "24 Date 00 Friends Two Factor Report";
+    document.getElementById('reportTitle').innerText = "00 Date 00 Friends Cookies Report";
    // document.getElementById('member-rate').innerText = "7.00";
    // document.getElementById('admin-rate').innerText = "7.00";
     document.getElementById('uidReportSection').style.display = 'block';
@@ -385,7 +385,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (currentReportType === '30') {
       rate = ok.length < 100 ? 12.00 : 12.30;
     } else {
-      rate = ok.length < 50 ? 6.00 : 6.00;
+      rate = ok.length < 100 ? 4.50 : 4.70;
     }
 
     const amount = ok.length * rate;
@@ -455,7 +455,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   <script>
     // ржЖржкржирж╛рж░ ржирждрзБржи ржПржмржВ ржЪрзВрзЬрж╛ржирзНржд Web App URL ржЯрж┐ ржПржЦрж╛ржирзЗ ржпрзЛржЧ ржХрж░рж╛ рж╣рзЯрзЗржЫрзЗред
-    const webAppUrl = 'https://script.google.com/macros/s/AKfycbyiRzJJx5ZNDlSA_ST2IeCKlqis2hQc1QnCaw9n9J15zs0iTrndph2EpX0JKj5y1ac/exec'; 
+    const webAppUrl = 'https://script.google.com/macros/s/AKfycbzVKgBtKbtJJPEMBoDB_7pt-xKgkhKrFxd7xpd1u7Sg7aFzqA_i70PItZ7xiBLxvbnarw/exec'; 
 
     let allProducts = [];
 
@@ -497,7 +497,7 @@ document.addEventListener("DOMContentLoaded", () => {
     } else {
         descElement.textContent = 
 `🕙 Submit last time: 10:00 pm
-📄 Sheet: uid | pass | 2fa | mail
+📄 Sheet: uid | pass | cookies | mail
 🟢 Fresh ID Report: 95%-100%`;
     }
 }
