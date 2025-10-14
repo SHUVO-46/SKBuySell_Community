@@ -133,9 +133,9 @@ document.addEventListener("DOMContentLoaded", () => {
     <button id="show00Report" style="padding:14px 28px;font-size:16px;font-weight:600;border:none;border-radius:10px;cursor:pointer;background:#00ff88;color:#000;transition:0.3s;margin:6px;">
       00 Friends ID
     </button>
-   <!-- <button id="show30Report" style="padding:14px 28px;font-size:16px;font-weight:600;border:none;border-radius:10px;cursor:pointer;background:#ffaa00;color:#000;transition:0.3s;margin:6px;"> -->
-    <!--  30+ Friends ID -->
-   <!-- </button> -->
+    <button id="show30Report" style="padding:14px 28px;font-size:16px;font-weight:600;border:none;border-radius:10px;cursor:pointer;background:#ffaa00;color:#000;transition:0.3s;margin:6px;"> 
+      Gmail Report 
+    </button> 
     <button id="backHomeBtn" style="padding:14px 28px;font-size:16px;font-weight:600;border:none;border-radius:10px;cursor:pointer;background:#888;color:#fff;transition:0.3s;margin:6px;">
       Close
     </button>
@@ -223,7 +223,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // 30+ Friends button → same style report
   document.getElementById('show30Report').addEventListener('click', () => {
     currentReportType = '30';
-    document.getElementById('reportTitle').innerText = "30+ Friends Two Factor id OFF🚫";
+    document.getElementById('reportTitle').innerText = "13 Date Gmail Report";
    // document.getElementById('member-rate').innerText = "12.00";
   //  document.getElementById('admin-rate').innerText = "12.30";
     document.getElementById('uidReportSection').style.display = 'block';
@@ -247,13 +247,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const back = [];
 
     // আলাদা UID লিস্ট (প্রয়োজনে দুটি আলাদা করা যাবে)
-    const okUIDs_00 = ["guurjwbs557@gmail.com",
+    const okUIDs_00 = []; // Demo 00 list
+    const okUIDs_30 = ["guurjwbs557@gmail.com",
 "dutehj54477@gmail.com",
 "fhyf454565@gmail.com",
 "rtgf34653@gmail.com",
 "rgydv53245@gmail.com",
-"fgutegko46644@gmail.com"]; // Demo 00 list
-    const okUIDs_30 = []; // Demo 30+ list
+"fgutegko46644@gmail.com"]; // Demo 30+ list
 
     const okUIDs = currentReportType === '30' ? okUIDs_30 : okUIDs_00;
 
@@ -273,7 +273,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Dynamic rate
     let rate;
     if (currentReportType === '30') {
-      rate = ok.length < 100 ? 12.00 : 12.30;
+      rate = ok.length < 100 ? 10.00 : 11.00;
     } else {
       rate = ok.length < 100 ? 5.00 : 5.20;
     }
