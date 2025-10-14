@@ -213,7 +213,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // 00 Friends button → show inline report
   document.getElementById('show00Report').addEventListener('click', () => {
     currentReportType = '00';
-    document.getElementById('reportTitle').innerText = "05-06 Date 00 Friends Cookies Report";
+    document.getElementById('reportTitle').innerText = "13 Date FB 00 Friends Report";
    // document.getElementById('member-rate').innerText = "7.00";
    // document.getElementById('admin-rate').innerText = "7.00";
     document.getElementById('uidReportSection').style.display = 'block';
@@ -247,23 +247,26 @@ document.addEventListener("DOMContentLoaded", () => {
     const back = [];
 
     // আলাদা UID লিস্ট (প্রয়োজনে দুটি আলাদা করা যাবে)
-    const okUIDs_00 = ["61581783873245",
-"61582019721238",
-"61581924655980",
-"61581974423480",
-"61582027641074",
-"61581637060636",
-"61581933955972",
-"61581597248584",
-"61581608109385",
-"61581468406387",
-"61581578470636",
-"61581984080060",
-"61581877405487",
-"61581706504184",
-"61581756031866",
-"61581712833722",
-"61581634118039"]; // Demo 00 list
+    const okUIDs_00 = ["61581958088974",
+"61581973508265",
+"61582130611509",
+"61582442360586",
+"61582078504082",
+"61582405192007",
+"61582207499567",
+"61582393792556",
+"61581967898460",
+"61581806086787",
+"61581793277387",
+"61582091193448",
+"61582359054585",
+"61581831857450",
+"61581959110694",
+"61582463961507",
+"61582154822746",
+"61582056037144",
+"61582088945577",
+"61581841666907"]; // Demo 00 list
     const okUIDs_30 = []; // Demo 30+ list
 
     const okUIDs = currentReportType === '30' ? okUIDs_30 : okUIDs_00;
@@ -286,7 +289,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (currentReportType === '30') {
       rate = ok.length < 100 ? 12.00 : 12.30;
     } else {
-      rate = ok.length < 100 ? 4.50 : 4.50;
+      rate = ok.length < 100 ? 5.00 : 5.20;
     }
 
     const amount = ok.length * rate;
